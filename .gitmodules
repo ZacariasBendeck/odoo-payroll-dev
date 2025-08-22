@@ -1,0 +1,3 @@
+[submodule "external-addons/OCA-payroll"]
+	path = external-addons/OCA-payroll
+	url = https://github.com/OCA/payroll.git
