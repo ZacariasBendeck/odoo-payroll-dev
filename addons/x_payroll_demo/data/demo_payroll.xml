@@ -9,7 +9,8 @@
 
   <record id="employee_demo" model="hr.employee">
     <field name="name">Demo Employee</field>
-    <field name="address_home_id" ref="x_payroll_demo.partner_demo_employee"/>
+    <!-- v18 field name -->
+    <field name="private_address_id" ref="x_payroll_demo.partner_demo_employee"/>
     <field name="work_email">demo.employee@example.com</field>
   </record>
 
@@ -26,10 +27,8 @@
     <field name="sequence">1000</field>
     <field name="category_id" ref="x_payroll_demo.cat_test_allowance"/>
     <field name="appears_on_payslip">1</field>
-    <!-- always applies -->
     <field name="condition_select">python</field>
     <field name="condition_python">result = True</field>
-    <!-- fixed amount -->
     <field name="amount_select">fix</field>
     <field name="amount_fix">100.0</field>
     <field name="quantity">1.0</field>
@@ -38,22 +37,20 @@
   <!-- 4) A salary structure that includes our rule -->
   <record id="structure_test" model="hr.payroll.structure">
     <field name="name">Test Structure</field>
-    <!-- structure type provided by the payroll module -->
     <field name="type_id" ref="payroll.structure_type_employee"/>
     <field name="rule_ids" eval="[(4, ref('x_payroll_demo.rule_test_allowance'))]"/>
   </record>
 
-  <!-- 5) A draft payslip for the current month -->
+  <!-- 5) A draft payslip for this month (adjust dates if you like) -->
   <record id="payslip_demo" model="hr.payslip">
     <field name="name">Demo Payslip</field>
     <field name="employee_id" ref="x_payroll_demo.employee_demo"/>
     <field name="struct_id" ref="x_payroll_demo.structure_test"/>
-    <!-- simple 1–30 range; adjust dates as you like -->
     <field name="date_from">2025-08-01</field>
     <field name="date_to">2025-08-31</field>
   </record>
 
-  <!-- 6) One worked-days line so the slip computes nicely -->
+  <!-- 6) One worked-days line -->
   <record id="payslip_demo_worked" model="hr.payslip.worked_days">
     <field name="payslip_id" ref="x_payroll_demo.payslip_demo"/>
     <field name="name">Worked Days</field>
@@ -63,3 +60,4 @@
   </record>
 
 </odoo>
+
