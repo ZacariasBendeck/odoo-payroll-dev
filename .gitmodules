@@ -1,3 +1,4 @@
 [submodule "external-addons/OCA-payroll"]
 	path = external-addons/OCA-payroll
-	url = https://github.com/OCA/payroll.git
+	url = https://github.com/ZacariasBendeck/odoo_payroll
+	branch = 18.0
