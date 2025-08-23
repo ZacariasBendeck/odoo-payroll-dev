@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo noupdate="1">
 
-  <!-- Optional: a contact we could link later -->
+  <!-- Partner (optional) -->
   <record id="partner_demo_employee" model="res.partner">
     <field name="name">Demo Employee</field>
     <field name="email">demo.employee@example.com</field>
   </record>
 
-  <!-- Minimal employee: ONLY fields we know exist on your model -->
+  <!-- Minimal employee (fields confirmed by your DB) -->
   <record id="employee_demo" model="hr.employee">
     <field name="name">Demo Employee</field>
-    <!-- If you want to link the private/home address, uncomment the next line -->
+    <!-- If you want to link home address later, uncomment: -->
     <!-- <field name="address_id" ref="x_payroll_demo.partner_demo_employee"/> -->
   </record>
 
@@ -34,14 +34,20 @@
     <field name="quantity">1.0</field>
   </record>
 
-  <!-- Salary structure that includes the rule -->
+  <!-- Create our own structure TYPE (since payroll.structure_type_employee doesn't exist here) -->
+  <record id="structure_type_demo" model="hr.payroll.structure.type">
+    <field name="name">Employee (Demo)</field>
+    <field name="code">employee_demo</field>
+  </record>
+
+  <!-- Salary structure that uses the type above and includes our rule -->
   <record id="structure_test" model="hr.payroll.structure">
     <field name="name">Test Structure</field>
-    <field name="type_id" ref="payroll.structure_type_employee"/>
+    <field name="type_id" ref="x_payroll_demo.structure_type_demo"/>
     <field name="rule_ids" eval="[(4, ref('x_payroll_demo.rule_test_allowance'))]"/>
   </record>
 
-  <!-- Draft payslip for this month (adjust dates if needed) -->
+  <!-- Draft payslip -->
   <record id="payslip_demo" model="hr.payslip">
     <field name="name">Demo Payslip</field>
     <field name="employee_id" ref="x_payroll_demo.employee_demo"/>
@@ -50,7 +56,7 @@
     <field name="date_to">2025-08-31</field>
   </record>
 
-  <!-- Worked-days line so the slip computes -->
+  <!-- Worked days -->
   <record id="payslip_demo_worked" model="hr.payslip.worked_days">
     <field name="payslip_id" ref="x_payroll_demo.payslip_demo"/>
     <field name="name">Worked Days</field>
