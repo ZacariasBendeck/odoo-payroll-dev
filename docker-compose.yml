@@ -9,6 +9,8 @@ services:
       POSTGRES_PASSWORD: odoo
     volumes:
       - dbdata:/var/lib/postgresql/data
+      - ./addons:/mnt/extra-addons
+      - ./external-addons/OCA-payroll:/mnt/extra-addons/OCA-payroll
 
   odoo:
     image: odoo:18.0
